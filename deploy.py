@@ -195,13 +195,15 @@ def main(tmpdirname: str,url: str):
     #result = list(Path(outputdir).rglob("*.tgz"))
     result = glob.glob(outputdir + '/**/*.tgz', recursive=True)
     if pargs.s3endpoint:
-        s3 = boto3.client('s3',endpoint_url=pargs.s3endpoint)
+        #s3 = boto3.client('s3',endpoint_url=pargs.s3endpoint)
+        s3 = boto3.resource('s3',endpoint_url=pargs.s3endpoint)
     else:
-        s3 = boto3.client('s3')
+        s3 = boto3.resource('s3')
         
     for r in result:
         relative = (pargs.s3root + "/").replace('//','/') + r.replace(outputdir+"/","")
-        s3.upload_file(r,pargs.s3bucket,relative)
+        #s3.upload_file(r,pargs.s3bucket,relative)
+        s3.Bucket(pargs.s3bucket).upload_file(r,relative)
         logger.info(relative)
 
 if __name__ == "__main__":
