@@ -37,7 +37,6 @@ jobs:
       container_version: ${{ fromJSON(steps.docker_action_meta.outputs.json).labels['org.opencontainers.image.version'] }}
       container_revision: ${{ fromJSON(steps.docker_action_meta.outputs.json).labels['org.opencontainers.image.revision'] }}
       container_base: ${{ fromJSON(steps.docker_action_meta.outputs.json).tags[0] }}
-      matrix_supportedSplunk: ${{ steps.matrix.outputs.supportedSplunk }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -75,9 +74,6 @@ jobs:
             type=ref,event=branch
             type=ref,event=pr
             type=ref,event=tag
-      - name: matrix
-        id: matrix
-        uses: splunk/addonfactory-test-matrix-action@v1
 
   build_action:
     runs-on: ubuntu-latest
