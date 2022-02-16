@@ -201,8 +201,8 @@ def main(tmpdirname: str,url: str):
 if __name__ == "__main__":
     
     with tempfile.TemporaryDirectory() as tmpdirname:
-        #url = "https://github.com/splunk/splunk-configurations-base-indexes/releases/download/v1.0.1/splunk_configurations_base_indexes-1.0.1.spl"
-        url = "https://github.com/splunk/splunk-add-on-for-cef/releases/download/v2.0.4/TA-cef-for-splunk-2.0.4.tar.gz"
+        #url = "https://github.com/rfaircloth-splunk/splunk-configurations-base-indexes/releases/download/v1.0.1/splunk_configurations_base_indexes-1.0.1.spl"
+        url = "https://github.com/rfaircloth-splunk/splunk-add-on-for-cef/releases/download/v2.0.4/TA-cef-for-splunk-2.0.4.tar.gz"
         logger.info(f"processing {url}")
         main(tmpdirname,url)
         logger.info(f"output {tmpdirname}")
