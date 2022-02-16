@@ -1,0 +1,17 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: app-cef
+  namespace: splunk
+spec:
+  template:
+    spec:
+      containers:
+        - name: splunk-operator-app-deployer
+          image: ghcr.io/rfaircloth-splunk/splunk-operator-app-deployer/container:main
+          command: ["python", "/app/deploy.py", "--sh itoa", "--sh es", "--s3endpoint http://rook-ceph-rgw-ceph-objectstore.rook-ceph.svc.cluster.local"]
+          envFrom:
+            - secretRef:
+                name: smartstore
+      restartPolicy: Never
+  backoffLimit: 4

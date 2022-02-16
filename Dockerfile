@@ -21,3 +21,6 @@ FROM base as final
 
 COPY --from=builder /app/.venv /app/.venv
 COPY deploy.py /app/
+COPY entrypoint.sh /
+
+ENTRYPOINT [ "/entrypoint.sh" ]
