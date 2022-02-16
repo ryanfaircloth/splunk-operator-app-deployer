@@ -102,6 +102,7 @@ def cut_cook_config(expanded_app_path,cutpath_app_path,appname,cutoutpath_app_pa
 
 def main(tmpdirname: str,url: str):
     parser = argparse.ArgumentParser(description='Control app deployment for app-framework')
+    parser.add_argument('--s3endpoint')
     parser.add_argument('--cut', action=argparse.BooleanOptionalAction)
     parser.add_argument('--base', action=argparse.BooleanOptionalAction)
     parser.add_argument('--sh',action='append')
@@ -191,8 +192,11 @@ def main(tmpdirname: str,url: str):
     
     #result = list(Path(outputdir).rglob("*.tgz"))
     result = glob.glob(outputdir + '/**/*.tgz', recursive=True)
-    s3 = boto3.client('s3')
-    cluster="lab"
+    if pargs.s3endpoint:
+        s3 = boto3.client('s3',endpoint=pargs.s3endpoint)
+    else:
+        s3 = boto3.client('s3')
+        
     for r in result:
         relative = "example/" + r.replace(outputdir+"/","")
         s3.upload_file(r,"home-cluster-apps",relative)
@@ -201,8 +205,8 @@ def main(tmpdirname: str,url: str):
 if __name__ == "__main__":
     
     with tempfile.TemporaryDirectory() as tmpdirname:
-        #url = "https://github.com/rfaircloth-splunk/splunk-configurations-base-indexes/releases/download/v1.0.1/splunk_configurations_base_indexes-1.0.1.spl"
-        url = "https://github.com/rfaircloth-splunk/splunk-add-on-for-cef/releases/download/v2.0.4/TA-cef-for-splunk-2.0.4.tar.gz"
+        #url = "https://github.com/splunk/splunk-configurations-base-indexes/releases/download/v1.0.1/splunk_configurations_base_indexes-1.0.1.spl"
+        url = "https://github.com/splunk/splunk-add-on-for-cef/releases/download/v2.0.4/TA-cef-for-splunk-2.0.4.tar.gz"
         logger.info(f"processing {url}")
         main(tmpdirname,url)
         logger.info(f"output {tmpdirname}")
