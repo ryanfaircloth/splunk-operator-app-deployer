@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: app-base
+  name: app-cef
   namespace: splunk
 spec:
   ttlSecondsAfterFinished: 60
@@ -24,12 +24,10 @@ spec:
               "--s3root",
               "demo1",
               "--source",
-              "splunkbase://742/8.4.0",
+              "https://github.com/splunk/splunk-configurations-base-indexes/releases/download/v1.0.1/splunk_configurations_base_indexes-1.0.1.spl",
             ]
           envFrom:
             - secretRef:
                 name: smartstore
-            - secretRef:
-                name: splunkbase-secret
       restartPolicy: Never
   backoffLimit: 4

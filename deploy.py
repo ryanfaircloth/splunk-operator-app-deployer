@@ -58,10 +58,7 @@ def getSplunkbase(tmpdirname: str, url: str):
             data=creds
         )    
         if auth.status_code == 200:        
-            logger.info("Authenticated to splunkbase")
-            root = ET.fromstring(auth.content)
-            logger.info(root)
-            
+            logger.info("Authenticated to splunkbase")            
         else:
             raise Exception("Invalid user/pass")
         
