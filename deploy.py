@@ -195,7 +195,7 @@ def main(tmpdirname: str,url: str):
     #result = list(Path(outputdir).rglob("*.tgz"))
     result = glob.glob(outputdir + '/**/*.tgz', recursive=True)
     if pargs.s3endpoint:
-        s3 = boto3.client('s3',endpoint=pargs.s3endpoint)
+        s3 = boto3.client('s3',endpoint_url=pargs.s3endpoint)
     else:
         s3 = boto3.client('s3')
         
