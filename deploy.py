@@ -103,6 +103,8 @@ def cut_cook_config(expanded_app_path,cutpath_app_path,appname,cutoutpath_app_pa
 def main(tmpdirname: str,url: str):
     parser = argparse.ArgumentParser(description='Control app deployment for app-framework')
     parser.add_argument('--s3endpoint')
+    parser.add_argument('--s3bucket')
+    parser.add_argument('--s3root')
     parser.add_argument('--cut', action=argparse.BooleanOptionalAction)
     parser.add_argument('--base', action=argparse.BooleanOptionalAction)
     parser.add_argument('--sh',action='append')
@@ -198,8 +200,8 @@ def main(tmpdirname: str,url: str):
         s3 = boto3.client('s3')
         
     for r in result:
-        relative = "example/" + r.replace(outputdir+"/","")
-        s3.upload_file(r,"home-cluster-apps",relative)
+        relative = (pargs.s3root + "/").replace('//','/') + r.replace(outputdir+"/","")
+        s3.upload_file(r,pargs.s3bucket,relative)
         logger.info(relative)
 
 if __name__ == "__main__":
