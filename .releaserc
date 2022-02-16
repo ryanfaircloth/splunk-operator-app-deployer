@@ -43,7 +43,7 @@
                 }
             ],
             ["@semantic-release/exec", {
-                "prepareCmd": "echo ${nextRelease.version} >package/etc/VERSION"
+                "prepareCmd": "echo ${nextRelease.version} >VERSION"
 
             }],
             ["@semantic-release/git", {

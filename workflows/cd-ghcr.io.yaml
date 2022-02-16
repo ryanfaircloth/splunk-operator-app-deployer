@@ -56,7 +56,7 @@ jobs:
       - id: Pull
         name: Pull Container
         run: |
-          VERSION=$(cat package/etc/VERSION)
+          VERSION=$(cat VERSION)
           for line in $CONTAINER_SOURCE_TAGS; do echo working on "$line"; /tmp/regctl image copy ghcr.io/${{ github.repository }}/container:$VERSION $line; done
         env:
           CONTAINER_SOURCE_TAGS: ${{ steps.docker_action_meta.outputs.tags }}
