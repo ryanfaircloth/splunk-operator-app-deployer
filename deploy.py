@@ -212,7 +212,7 @@ def main(tmpdirname: str):
         os.mkdir(basedir)
         shutil.copy(local_filename, os.path.join(basedir, appname + ".tgz"))
 
-    if pargs.sh:
+    if pargs.sh and 'None' not in pargs.sh:
         logger.info(f"Applying to sh {pargs.sh}")
         droot = os.path.join(outputdir, "sh")
         os.mkdir(droot)
@@ -230,7 +230,7 @@ def main(tmpdirname: str):
                     os.path.join(os.path.join(droot, d), appname + ".tgz"),
                 )
 
-    if pargs.idxc:
+    if pargs.idxc and 'None' not in pargs.idxc:
         logger.info(f"Applying to idxc {pargs.idxc}")
         droot = os.path.join(outputdir, "idxc")
         os.mkdir(droot)
@@ -240,7 +240,7 @@ def main(tmpdirname: str):
                 local_filename, os.path.join(os.path.join(droot, d), appname + ".tgz")
             )
 
-    if pargs.fwd:
+    if pargs.fwd and 'None' not in pargs.fwd:
         logger.info(f"Applying to fwd {pargs.fwd}")
         droot = os.path.join(outputdir, "fwd")
         os.mkdir(droot)
