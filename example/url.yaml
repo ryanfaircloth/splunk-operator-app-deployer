@@ -15,7 +15,6 @@ spec:
               "/entrypoint.sh",
               "--sh",
               "itoa",
-              "--sh",
               "es",
               "--s3endpoint",
               "http://rook-ceph-rgw-ceph-objectstore.rook-ceph.svc.cluster.local",
