@@ -1,6 +1,5 @@
 # splunk-operator-app-deployer
 
-
 The app deployer will deploy app packages to S3 for Splunk operator
 
 ## Usage
@@ -8,7 +7,10 @@ The app deployer will deploy app packages to S3 for Splunk operator
 To deploy apps from Splunk base a username and password must be stored as a secret
 
 ```bash
-kubectl -n splunk create secret generic splunkbase-secret --from-literal=SPLUNK_BASE_USER=produser --from-literal=SPLUNK_BASE_PASSWORD=<password>
+#This username and password must be "api" enabled and should not have write access to any apps on Splunkbase
+kubectl -n splunk create secret generic splunkbase-secret \
+    --from-literal=SPLUNK_BASE_USER=produser \
+    --from-literal=SPLUNK_BASE_PASSWORD=<password>
 ```
 
 The following example layout can be used to support a "complex" multi search head environment with ITSI and ES
@@ -42,3 +44,104 @@ The following example layout can be used to support a "complex" multi search hea
     │   ├── ds
     │   │   ├── base #base configuration applied to all ds deployments via apps
     │   │   ├── apps #base configuration applied to all ds deployments via deployment-apps
+
+## Deploy an add-on from Splunk base
+
+```yaml
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: app-base
+  namespace: splunk
+spec:
+  ttlSecondsAfterFinished: 60
+  template:
+    spec:
+      containers:
+        - name: splunk-operator-app-deployer
+          image: ghcr.io/rfaircloth-splunk/splunk-operator-app-deployer/container:1.1.5
+          command:
+            [
+              "/entrypoint.sh",
+              "--sh",
+              "itoa",
+              "--sh",
+              "es",
+              "--s3endpoint",
+              "http://rook-ceph-rgw-ceph-objectstore.rook-ceph.svc.cluster.local",
+              "--s3bucket",
+              "smartstore-c1",
+              "--s3root",
+              "demo1",
+              "--source",
+              "splunkbase://742/8.4.0",
+            ]
+          envFrom:
+            - secretRef:
+                name: smartstore
+            - secretRef:
+                name: splunkbase-secret
+      restartPolicy: Never
+  backoffLimit: 4
+```
+
+## Deploy an app from a url
+
+```yaml
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: app-cef
+  namespace: splunk
+spec:
+  ttlSecondsAfterFinished: 60
+  template:
+    spec:
+      containers:
+        - name: splunk-operator-app-deployer
+          image: ghcr.io/rfaircloth-splunk/splunk-operator-app-deployer/container:1.1.5
+          command:
+            [
+              "/entrypoint.sh",
+              "--sh",
+              "itoa",
+              "--sh",
+              "es",
+              "--s3endpoint",
+              "http://rook-ceph-rgw-ceph-objectstore.rook-ceph.svc.cluster.local",
+              "--s3bucket",
+              "smartstore-c1",
+              "--s3root",
+              "demo1",
+              "--source",
+              "https://github.com/splunk/splunk-configurations-base-indexes/releases/download/v1.0.1/splunk_configurations_base_indexes-1.0.1.spl",
+            ]
+          envFrom:
+            - secretRef:
+                name: smartstore
+      restartPolicy: Never
+  backoffLimit: 4
+
+```
+
+## Options
+
+The deployment "job" can be configured using CLI switces in the cmd portion of the manifest
+
+```bash
+
+--cut #this option prunes all config from the package that is not used in Splunk Indexing and deployes to the "cut" directory within the bucket. When using this option only --sh and --fwd hwf* arguments should be used
+--sh <placement> #see placement list above can be listed more than once to select multiple locations "base" should be used alone
+--idxc <placement> #see placement list above can be listed more than once to select multiple locations "base" should be used alone
+--fwd <placement> #see placement list above can be listed more than once to select multiple locations "base" should be used alone
+--ds <placement> #see placement list above can be listed more than once to select multiple locations "base" should be used alone
+
+--s3endpoint #optional uri for s3 endpoint typically used outside of aws
+--s3bucket #bucket name required
+--s3root #root folder within bucket required
+
+--source #One of
+         #http/https url without authentication
+         #splunkbase://<id>/version requires secret numeric splunk base id and public version
+         #warning Splunk base versions may be hidden/removed at any time best practice is to utilize a local artifact server
+```
