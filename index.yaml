@@ -9,6 +9,6 @@ entries:
     name: splunk-operator-app-deployer
     type: application
     urls:
-    - https://github.com/splunk/splunk-operator-app-deployer/releases/download/v1.5.1/splunk-operator-app-deployer-1.5.1.tgz
+    - https://github.com/rfaircloth-splunk/splunk-operator-app-deployer/releases/download/v1.5.1/splunk-operator-app-deployer-1.5.1.tgz
     version: 1.5.1
 generated: "2022-02-17T15:52:54.983780251Z"
