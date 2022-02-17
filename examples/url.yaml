@@ -1,0 +1,16 @@
+args:
+  [
+    "--sh",
+    "base",
+    "--s3endpoint",
+    "http://rook-ceph-rgw-ceph-objectstore.rook-ceph.svc.cluster.local",
+    "--s3bucket",
+    "smartstore-c1",
+    "--s3root",
+    "demo1",
+    "--source",
+    "https://github.com/splunk/splunk-configurations-base-indexes/releases/download/v1.0.1/splunk_configurations_base_indexes-1.0.1.spl",
+  ]
+envFrom:
+  - secretRef:
+      name: smartstore
