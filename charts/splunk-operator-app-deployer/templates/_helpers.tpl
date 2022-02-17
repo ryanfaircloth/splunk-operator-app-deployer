@@ -23,13 +23,13 @@ If release name contains chart name it will be used as a full name.
 */}}
 {{- define "job.fullname" -}}
 {{- if .Values.fullnameOverride -}}
-{{- .Values.fullnameOverride | trunc 58 | trimSuffix "-" -}}
+{{- .Values.fullnameOverride | trunc 56 | trimSuffix "-" -}}
 {{- else -}}
 {{- $name := default .Chart.Name .Values.nameOverride -}}
 {{- if contains $name .Release.Name -}}
-{{- .Release.Name | trunc 63 | trimSuffix "-" -}}
+{{- .Release.Name | trunc 56 | trimSuffix "-" -}}
 {{- else -}}
-{{- printf "%s-%s" .Release.Name "spl-app" | trunc 58 | trimSuffix "-" -}}
+{{- printf "%s-%s" .Release.Name "spl-app" | trunc 48 | trimSuffix "-" -}}
 {{- end -}}
 {{- end -}}
 {{- end -}}
