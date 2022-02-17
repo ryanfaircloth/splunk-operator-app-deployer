@@ -2,4 +2,4 @@
 
 source /app/.venv/bin/activate
 
-python /app/deploy.py "$@"
+python /app/deploy.py $@
