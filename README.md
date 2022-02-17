@@ -49,7 +49,8 @@ The following example layout can be used to support a "complex" multi search hea
 
 ```bash
 #Release name must use a valid dns format name (a-z 0-9 -)
-helm upgrade --install --namespace splunk \
+helm upgrade --install \
+    --namespace splunk \
     -f examples/ta.yaml \
     splunk-ta-windows \
     charts/splunk-operator-app-deployer
