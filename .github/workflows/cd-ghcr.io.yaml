@@ -41,7 +41,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Docker meta
         id: docker_action_meta
-        uses: docker/metadata-action@v3.5.0
+        uses: docker/metadata-action@v3.6.2
         with:
           images: ghcr.io/${{ github.repository }}/container
           tags: |
