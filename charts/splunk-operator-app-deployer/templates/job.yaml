@@ -2,7 +2,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: {{ template "job.fullname" . }}-{{ randAlphaNum 5 | lower }}
+  name: {{ template "job.fullname" . }}-{{ (print $.Values.args) | sha256sum | trunc 6 }}
 spec:
   template:
     spec:

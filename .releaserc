@@ -21,6 +21,9 @@
                 }
             ],
             "@semantic-release/release-notes-generator",
+            ["@semantic-release/exec", {
+                "prepareCmd": 'yq -i eval ".appVersion = \"${nextRelease.version}\"" charts/splunk-operator-app-deployer/Chart.yaml;yq -i eval ".version = \"${nextRelease.version}\"" charts/splunk-operator-app-deployer/Chart.yaml'
+            }],
             [
                 "@google/semantic-release-replace-plugin",
                 {
@@ -49,6 +52,8 @@
             ["@semantic-release/git", {
                 "assets": [
                     "pyproject.toml",
+                    "VERSION",
+                    "charts/splunk-operator-app-deployer/Chart.yaml"
                 ],
                 "message": "chore(release): ${nextRelease.version}\n\n${nextRelease.notes}"
             }],
