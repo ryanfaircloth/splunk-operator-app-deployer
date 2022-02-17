@@ -58,7 +58,7 @@ jobs:
         with:
           name: splunk-operator-app-deployer
           repository: ${{ github.repository }}/chart
-          tag: ${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.version'] }}
+          tag: ${{ fromJSON(steps.docker_action_meta.outputs.json).labels['org.opencontainers.image.version'] }}
           path: charts/splunk-operator-app-deployer # Default charts/{name}
           registry: ghcr.io
           registry_username: ${{ github.actor }}
