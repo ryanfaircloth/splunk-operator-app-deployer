@@ -2,6 +2,16 @@ apiVersion: v1
 entries:
   splunk-operator-app-deployer:
   - apiVersion: v2
+    appVersion: 1.5.2
+    created: "2022-02-17T16:17:58.545992761Z"
+    description: A Splunk App deployment tool
+    digest: 0cb31529dbae3ddda506c732a60d3a01784e5cbc38e5b1385c71244b71ed442d
+    name: splunk-operator-app-deployer
+    type: application
+    urls:
+    - https://github.com/rfaircloth-splunk/splunk-operator-app-deployer/releases/download/v1.5.2/splunk-operator-app-deployer-1.5.2.tgz
+    version: 1.5.2
+  - apiVersion: v2
     appVersion: 1.5.1
     created: "2022-02-17T15:52:54.984741063Z"
     description: A Splunk App deployment tool
@@ -11,4 +21,4 @@ entries:
     urls:
     - https://github.com/rfaircloth-splunk/splunk-operator-app-deployer/releases/download/v1.5.1/splunk-operator-app-deployer-1.5.1.tgz
     version: 1.5.1
-generated: "2022-02-17T15:52:54.983780251Z"
+generated: "2022-02-17T16:17:58.544965767Z"
