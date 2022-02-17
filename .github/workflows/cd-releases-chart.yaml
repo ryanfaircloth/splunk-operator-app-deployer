@@ -25,9 +25,22 @@ jobs:
         with:
           version: v3.8.0
 
-      - name: Run chart-releaser
-        uses: helm/chart-releaser-action@v1.3.0
-        env:
-          CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+      - name: Upload
+        run: |
+          mkdir /tmp/package
+          mkdir /tmp/index
+          mkdir /tmp/origin
+          echo ${{ secrets.GITHUB_TOKEN }} | gh auth login --with-token
+          VERSION=$(echo $GITHUB_REF | cut -d / -f 3)
+          echo $VERSION
+          wget https://rfaircloth-splunk.github.io/splunk-operator-app-deployer/index.yaml -P /tmp/origin
+          helm package charts/splunk-operator-app-deployer -d /tmp/package
+          gh release upload $VERSION /tmp/package/*
+          helm repo index /tmp/package --url https://github.com/splunk/splunk-operator-app-deployer/releases/download/$VERSION --merge /tmp/origin/index.yaml
+          cp /tmp/package/index.yaml /tmp/index/
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
         with:
-          charts_dir: charts/splunk-operator-app-deployer
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: /tmp/index
+          keep_files: true
