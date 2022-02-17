@@ -57,7 +57,7 @@ jobs:
         uses: appany/helm-oci-chart-releaser@v0.3.0
         with:
           name: splunk-operator-app-deployer
-          repository: ${{ github.repository }}/chart
+          repository: ${{ github.repository }}/charts
           tag: ${{ fromJSON(steps.docker_action_meta.outputs.json).labels['org.opencontainers.image.version'] }}
           path: charts/splunk-operator-app-deployer # Default charts/{name}
           registry: ghcr.io
