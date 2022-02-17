@@ -29,7 +29,7 @@ If release name contains chart name it will be used as a full name.
 {{- if contains $name .Release.Name -}}
 {{- .Release.Name | trunc 63 | trimSuffix "-" -}}
 {{- else -}}
-{{- printf "%s-%s" .Release.Name $name | trunc 58 | trimSuffix "-" -}}
+{{- printf "%s-%s" .Release.Name "spl-app" | trunc 58 | trimSuffix "-" -}}
 {{- end -}}
 {{- end -}}
 {{- end -}}
