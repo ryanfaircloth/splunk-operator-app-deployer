@@ -60,7 +60,6 @@ helm upgrade --install --namespace splunk \
 The deployment "job" can be configured using CLI switces in the cmd portion of the manifest
 
 ```bash
-
 --cut #this option prunes all config from the package that is not used in Splunk Indexing and deployes to the "cut" directory within the bucket. When using this option only --sh and --fwd hwf* arguments should be used
 --sh <placement> #see placement list above can be listed more than once to select multiple locations "base" should be used alone
 --idxc <placement> #see placement list above can be listed more than once to select multiple locations "base" should be used alone
