@@ -39,7 +39,7 @@ jobs:
       container_base: ${{ fromJSON(steps.docker_action_meta.outputs.json).tags[0] }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3.1.0
         with:
           submodules: false
           persist-credentials: false
@@ -84,7 +84,7 @@ jobs:
       # To use this repository's private action,
       # you must check out the repository
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3.1.0
         with:
           submodules: false
           persist-credentials: false
@@ -123,7 +123,7 @@ jobs:
       - meta
       - build_action
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3.1.0
         with:
           submodules: false
           persist-credentials: false
